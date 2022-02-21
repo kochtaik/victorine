@@ -128,12 +128,23 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { getDatabase, ref, child, get } from "firebase/database";
 
 export default defineComponent({
   name: "HelloWorld",
   props: {
     msg: String,
   },
+  mounted() {
+    const db = ref(getDatabase());
+    get(child(db, 'foo')).then((snapshot) => {
+      if (snapshot.exists()) {
+        console.log(snapshot.val());
+      } else {
+        console.log('No data');
+      }
+    })
+  }
 });
 </script>
 
