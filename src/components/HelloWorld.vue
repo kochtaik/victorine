@@ -67,7 +67,7 @@
         >
       </li>
     </ul>
-    <h3>Essential Links</h3>
+    <button @click="incrementStore">Essential Links</button>
     <ul>
       <li>
         <a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a>
@@ -119,7 +119,7 @@
           href="https://github.com/vuejs/awesome-vue"
           target="_blank"
           rel="noopener"
-          >awesome-vue</a
+          >{{ storeValue }}</a
         >
       </li>
     </ul>
@@ -127,10 +127,26 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { computed, defineComponent } from "vue";
 import { getDatabase, ref, child, get } from "firebase/database";
+import { useStore } from "@/store";
 
 export default defineComponent({
+  setup() {
+    const store = useStore();
+    const storeValue = computed(() => store.state.count);
+
+    function incrementStore() {
+      console.log(store.getters['auth/isLoggedInGetter']);
+      console.log(store.dispatch('auth/getSomething'));
+      store.commit("increment");
+    }
+    
+    return {
+      storeValue,
+      incrementStore,
+    }
+  },
   name: "HelloWorld",
   props: {
     msg: String,
