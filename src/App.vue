@@ -5,10 +5,12 @@
     <router-link to="/about">About</router-link>
   </nav> -->
   <router-view />
+  <BaseFooter/>
 </template>
 
 <script lang="ts" setup>
 import BaseHeader from "@/components/UI/BaseHeader.vue";
+import BaseFooter from "@/components/UI/BaseFooter.vue";
 </script>
 
 <style lang="scss">
