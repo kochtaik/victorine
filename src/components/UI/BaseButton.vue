@@ -1,7 +1,7 @@
 <template>
   <button
-    :class="[sizeClasses, variant]"
-    class="rounded-sm transition-colors"
+    :class="[sizeClasses, variantClasses]"
+    class="inline-flex justify-between items-center rounded-sm transition-colors"
     :disabled="disabled"
     >
     <slot></slot>
@@ -34,12 +34,12 @@ import { computed, reactive, ref, PropType } from "@vue/runtime-core"
 
 /* 'Disable' is seen as modifier of button variants */
 /* TODO: add 'circle' variant */
-const variant = computed(() => props.disabled ? `${props.variant} disabled`: props.variant)
+const variantClasses = computed(() => props.disabled ? `${props.variant} disabled`: props.variant)
 const sizeClasses = computed(() => {
   const sizeMap = {
-    sm: 'w-24 text-sm py-1',
-    md: 'w-32 leading-6',
-    lg: 'w-48 leading-6',
+    sm: 'text-sm px-2 py-2',
+    md: 'text-md px-3 py-3',
+    lg: 'text-xl px-4 py-4',
   };
 
   return sizeMap[props.size];
