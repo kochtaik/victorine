@@ -11,6 +11,7 @@ module.exports = {
     colors: {
       base: "#9D3FE7",
       baseDark: "#602093",
+      baseLight: "#AE60EB",
       error: "#D51A52",
       warning: "#FF9500",
       success: "#00B998",
@@ -22,15 +23,15 @@ module.exports = {
       spacer: "#D9D1E0",
       light: "#F5F3F7",
       white: "#FFFFFF",
-      baseGradient: "linear-gradient(to right, rgb(134, 239, 172), rgb(59, 130, 246), rgb(147, 51, 234))"
+      transparent: "transparent",
     },
     borderRadius: {
-      "rounded-none": '0',
-      "rounded-sm": "4px",
-      "rounded-md": "8px",
-      "rounded-lg": "12px",
-      "rounded-xl": "24px",
-      "rounded-full": "9999px",
+      "none": '0',
+      "sm": "4px",
+      "md": "8px",
+      "lg": "12px",
+      "xl": "24px",
+      "full": "9999px",
     },
     boxShadow: {
       xs: "0px 15px 10px 0px rgba(211, 192, 214, 0.07)",
