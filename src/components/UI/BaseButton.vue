@@ -33,12 +33,13 @@ import { computed, reactive, ref, PropType } from "@vue/runtime-core"
   });
 
 /* 'Disable' is seen as modifier of button variants */
+/* TODO: add 'circle' variant */
 const variant = computed(() => props.disabled ? `${props.variant} disabled`: props.variant)
 const sizeClasses = computed(() => {
   const sizeMap = {
-    sm: 'w-24 h-5 leading-5',
-    md: 'w-32 h-10 leading-6',
-    lg: 'w-48 h-12 leading-6',
+    sm: 'w-24 text-sm py-1',
+    md: 'w-32 leading-6',
+    lg: 'w-48 leading-6',
   };
 
   return sizeMap[props.size];
