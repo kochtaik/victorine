@@ -9,6 +9,8 @@
       >.
     </p>
     <h3>Installed CLI Plugins</h3>
+    <base-button variant="text" >Button</base-button>
+    <BaseInput/>
     <ul>
       <li>
         <a
