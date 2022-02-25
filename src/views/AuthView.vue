@@ -1,8 +1,9 @@
 <template>
-  <main>
-    <component :is="component"></component>
-    <h2>This is authentication page</h2>
-  </main>
+  <div class="flex justify-center items-center h-full">
+    <div class="container mx-4 p-4 shadow-lg rounded-sm max-w-xl">
+      <component :is="component"></component>
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
