@@ -8,10 +8,15 @@
 
         <ul class="flex justify-between items-center">
           <li>
-            <base-button size="sm" variant="text" >Sign in</base-button>
+            <!-- TODO: add support of router links in the button component -->
+            <base-button size="sm" variant="text" >
+              <router-link to="/auth/signin">Sign in</router-link>
+            </base-button>
           </li>
           <li>
-            <base-button size="sm">Sign up</base-button>
+            <base-button size="sm">
+              <router-link to="/auth/signup">Sign up</router-link>
+            </base-button>
           </li>
         </ul>
       </div>
