@@ -5,6 +5,8 @@
     :class="inputClass"
     :placeholder="placeholder"
     :disabled="disabled"
+    :value="props.modelValue"
+    @input="updateValue($event.target.value)"
   >
 </template>
 
@@ -13,7 +15,16 @@ import { computed, PropType } from "@vue/runtime-core";
 type InputTypes = "text | password | email";
 type InputVariants = "base | error | success | disabled";
 
+const emit = defineEmits(['update:modelValue']);
+
+function updateValue(value: string) {
+  emit('update:modelValue', value);
+}
+
 const props = defineProps({
+  modelValue: {
+    type: String,
+  },
   variant: {
     type: String as PropType<InputVariants>,
     default() {
@@ -38,7 +49,7 @@ const props = defineProps({
 
 const inputClass = computed(() => {
   return props.disabled ? "disabled" : props.variant;
-})
+});
 </script>
 
 

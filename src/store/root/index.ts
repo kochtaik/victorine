@@ -1,6 +1,7 @@
 import { Module, ModuleTree } from "vuex";
 import { RootState } from "./state";
 import auth from "../authentication/index";
+import user from "../user/index";
 
 import { state } from "./state";
 import { getters } from "./getters";
@@ -9,6 +10,7 @@ import { actions } from "./actions";
 
 const modules: ModuleTree<RootState> = {
   auth,
+  user,
 };
 
 const root: Module<RootState, RootState> = {

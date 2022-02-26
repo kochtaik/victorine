@@ -4,14 +4,26 @@
     <div class="my-4">
       You have an account? <router-link class="text-info" to="/auth/signin">Sign in</router-link> then!
     </div>
-    <form class="">
+    <form @submit.prevent="signUpWithEmail">
       <label class="input-group" for="email">
         <span class="mb-1">Email</span>
-        <BaseInput id="email" type="email" placeholder="Enter email" class="w-full truncate"/>
+        <BaseInput 
+          v-model="email"
+          id="email" 
+          type="email" 
+          placeholder="Enter email" 
+          class="w-full truncate"
+        />
       </label>
       <label class="input-group my-4" for="password">
         <span class="mb-1">Password</span>
-        <BaseInput id="password" type="password" placeholder="Enter password" class="w-full truncate"/>
+        <BaseInput
+          v-model="password"
+          id="password"
+          type="password"
+          placeholder="Enter password"
+          class="w-full truncate"
+        />
         <a href="#" class="text-sm mt-1 text-info">Forgot password?</a>
       </label>
       <div class="w-full">
@@ -35,6 +47,22 @@
     </form>
   </div>
 </template>
+
+
+<script lang="ts" setup>
+import { ref } from "@vue/runtime-core";
+import { useStore } from "@/store"
+const store = useStore();
+
+const email = ref<string>("");
+const password = ref<string>("");
+
+function signUpWithEmail() {
+  const payload = { email: email.value, password: password.value };
+
+  store.dispatch('auth/signUpWithEmail', payload);
+}
+</script>
 
 <style lang="scss" scoped>
 .input-group {
