@@ -12,8 +12,11 @@ import { store, key } from "./store";
 import './index.css';
 
 /* Third-party libraries */
-import Toast from "vue-toastification";
+import Toast, { PluginOptions } from "vue-toastification";
 import "vue-toastification/dist/index.css";
+const toastOptions: PluginOptions = {
+  closeButtonClassName: "close-crossmark",
+};
 
 store.dispatch('initializeFirebase').then(() => {
   createApp(App)
@@ -22,6 +25,6 @@ store.dispatch('initializeFirebase').then(() => {
     .component("BaseSpinner", BaseSpinner)
     .use(store, key)
     .use(router)
-    .use(Toast)
+    .use(Toast, toastOptions)
     .mount("#app");
 });

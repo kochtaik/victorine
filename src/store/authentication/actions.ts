@@ -33,7 +33,7 @@ export const actions: ActionTree<AuthenticationState, RootState> = {
       const user = userCredential.user;
       commit('user/setUser', user, { root: true });
     } catch (error) {
-      console.log(error);
+      throw new Error()
     }
   },
 

@@ -52,6 +52,7 @@
 import { ref } from "@vue/runtime-core";
 import { useStore } from "@/store"
 import { useRouter } from "vue-router";
+import * as toast from "@/plugins/customToasts";
 
 const store = useStore();
 const router = useRouter();
@@ -66,11 +67,10 @@ async function signInWithEmail() {
     await store.dispatch('auth/signInWithEmail', payload);
     router.push("/")
   } catch(error) {
-    console.error('smth went wrong');
+    toast.error('You entered wrong email')
   }
 }
 </script>
-
 <style lang="scss" scoped>
 .input-group {
   @apply flex flex-col items-start;
