@@ -142,7 +142,6 @@ export default defineComponent({
     const storeValue = computed(() => store.state.count);
 
     function incrementStore() {
-      console.log(store.getters['auth/isLoggedInGetter']);
       console.log(store.dispatch('auth/getSomething'));
       store.commit("increment");
     }
