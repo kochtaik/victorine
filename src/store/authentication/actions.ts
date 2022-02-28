@@ -1,7 +1,7 @@
-import { ActionTree } from "vuex"
+import { ActionTree } from "vuex";
 import { RootState } from "../root/state";
-import { AuthenticationState } from "./state"
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { AuthenticationState } from "./state";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { UserCredentials } from "./types";
 
 export const actions: ActionTree<AuthenticationState, RootState> = {
@@ -9,7 +9,7 @@ export const actions: ActionTree<AuthenticationState, RootState> = {
     return new Promise((resolve, reject) => setTimeout(() => {
       console.log('Async action has occurred!');
       resolve('Wow');
-    }, 1000));  
+    }, 1000));
   },
 
   async signUpWithEmail({ commit }, payload: UserCredentials) {
@@ -32,9 +32,19 @@ export const actions: ActionTree<AuthenticationState, RootState> = {
       const userCredential = await signInWithEmailAndPassword(auth, payload.email, payload.password);
       const user = userCredential.user;
       commit('user/setUser', user, { root: true });
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
+  },
 
+  async signOut({ commit }) {
+    const auth = getAuth();
+
+    try {
+      await signOut(auth);
+      commit('user/setUser', null, { root: true });
+    } catch (error) {
+      console.error(error);
+    }
   }
-}
+};
