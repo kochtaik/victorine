@@ -24,7 +24,6 @@
           placeholder="Enter password"
           class="w-full truncate"
         />
-        <a href="#" class="text-sm mt-1 text-info">Forgot password?</a>
       </label>
       <div class="w-full">
         <base-button type="submit" class="w-full rounded-full">Sign up</base-button>
