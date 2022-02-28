@@ -51,15 +51,23 @@
 <script lang="ts" setup>
 import { ref } from "@vue/runtime-core";
 import { useStore } from "@/store"
+import { useRouter } from "vue-router";
+
 const store = useStore();
+const router = useRouter();
 
 const email = ref<string>("");
 const password = ref<string>("");
 
-function signInWithEmail() {
+async function signInWithEmail() {
   const payload = { email: email.value, password: password.value };
 
-  store.dispatch('auth/signInWithEmail', payload);
+  try {
+    await store.dispatch('auth/signInWithEmail', payload);
+    router.push("/")
+  } catch(error) {
+    console.error('smth went wrong');
+  }
 }
 </script>
 
