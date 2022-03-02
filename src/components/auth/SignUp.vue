@@ -52,6 +52,7 @@
 import { ref } from "@vue/runtime-core";
 import { useStore } from "@/store";
 import { useRouter } from "vue-router";
+import * as toast from "@/plugins/customToasts";
 
 const store = useStore();
 const router = useRouter();
@@ -66,7 +67,8 @@ async function signUpWithEmail() {
     await store.dispatch('auth/signUpWithEmail', payload);
     router.push("/")
   } catch(error) {
-    console.error("Smth went wrong");
+    const { message } = error as Error;
+    toast.error(message);
   }
 }
 </script>

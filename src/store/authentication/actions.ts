@@ -3,6 +3,8 @@ import { RootState } from "../root/state";
 import { AuthenticationState } from "./state";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { UserCredentials } from "./types";
+import { FirebaseError } from "firebase/app";
+import { getAuthErrorMessage } from "@/utils/errorHandlers";
 
 export const actions: ActionTree<AuthenticationState, RootState> = {
   getSomething(ctx, payload) {
@@ -20,8 +22,9 @@ export const actions: ActionTree<AuthenticationState, RootState> = {
       const user = userCredential.user;
       commit('user/setUser', user, { root: true });
     } catch (error) {
-      console.error(error);
-      // const { code, message } = error;
+      /* TODO: maybe extract message in components scope. */
+      const message = getAuthErrorMessage(error as FirebaseError);
+      throw new Error(message);
     }
   },
 
@@ -33,7 +36,8 @@ export const actions: ActionTree<AuthenticationState, RootState> = {
       const user = userCredential.user;
       commit('user/setUser', user, { root: true });
     } catch (error) {
-      throw new Error()
+      const message = getAuthErrorMessage(error as FirebaseError);
+      throw new Error(message);
     }
   },
 

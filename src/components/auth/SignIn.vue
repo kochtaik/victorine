@@ -60,6 +60,7 @@ const router = useRouter();
 const email = ref<string>("");
 const password = ref<string>("");
 
+
 async function signInWithEmail() {
   const payload = { email: email.value, password: password.value };
 
@@ -67,7 +68,8 @@ async function signInWithEmail() {
     await store.dispatch('auth/signInWithEmail', payload);
     router.push("/")
   } catch(error) {
-    toast.error('You entered wrong email')
+    const { message } = error as Error;
+    toast.error(message);
   }
 }
 </script>
