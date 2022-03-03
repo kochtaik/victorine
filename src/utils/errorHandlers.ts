@@ -11,6 +11,7 @@ enum authErrorMessages {
   'auth/email-already-in-use' = "The provided email is already in use by an existing user. Each user must have a unique email.",
   'auth/invalid-password' = 'The provided value for the password user property is invalid. It must be a string with at least six characters.',
   'auth/weak-password' = "The password must be 6 characters long or more.",
+  'auth/account-exists-with-different-credential' = 'An account already exists with the same email address but different sign-in credentials. Sign in using a provider associated with this email address.',
   default = 'Something went wrong. Please, try later.'
 }
 

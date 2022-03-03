@@ -29,22 +29,22 @@
       <div class="w-full">
         <base-button type="submit" class="w-full rounded-full">Sign in</base-button>
       </div>
-      <div>
-        <div class="delimiter border-b my-6 border-disabled">
-          <span class="text-center bg-white px-2">or</span>
-        </div>
-      </div>
-      <div class="flex flex-col">
-        <base-button variant="outlined" class="rounded-full mb-4 text-center">
-          <img src="@/assets/icons/google_logo.svg" alt="Google logo" class="w-6 h-6 inline mr-3">
-          <span>Continue with Google</span>
-        </base-button>
-        <base-button variant="outlined" class="rounded-full mb-4 text-center">
-          <img src="@/assets/icons/fb_logo.svg" alt="Facebook logo" class="w-6 h-6 inline mr-3">
-          <span>Continue with Facebook</span>
-        </base-button>
-      </div>
     </form>
+    <div>
+      <div class="delimiter border-b my-6 border-disabled">
+        <span class="text-center bg-white px-2">or</span>
+      </div>
+    </div>
+    <div class="flex flex-col">
+      <base-button @click="authenticateWithGoogle" variant="outlined" class="rounded-full mb-4 text-center">
+        <img src="@/assets/icons/google_logo.svg" alt="Google logo" class="w-6 h-6 inline mr-3">
+        <span>Continue with Google</span>
+      </base-button>
+      <base-button variant="outlined" class="rounded-full mb-4 text-center">
+        <img src="@/assets/icons/fb_logo.svg" alt="Facebook logo" class="w-6 h-6 inline mr-3">
+        <span>Continue with Facebook</span>
+      </base-button>
+    </div>
   </div>
 </template>
 
@@ -72,6 +72,17 @@ async function signInWithEmail() {
     toast.error(message);
   }
 }
+
+async function authenticateWithGoogle() {
+  try {
+    await store.dispatch('auth/authenticateWithGoogle');
+    router.push("/");
+  } catch(error) {
+    const { message } = error as Error;
+    toast.error(message);
+  }
+}
+
 </script>
 <style lang="scss" scoped>
 .input-group {
