@@ -40,7 +40,7 @@
         <img src="@/assets/icons/google_logo.svg" alt="Google logo" class="w-6 h-6 inline mr-3">
         <span>Continue with Google</span>
       </base-button>
-      <base-button variant="outlined" class="rounded-full mb-4 text-center">
+      <base-button @click="authenticateWithFacebook" variant="outlined" class="rounded-full mb-4 text-center">
         <img src="@/assets/icons/fb_logo.svg" alt="Facebook logo" class="w-6 h-6 inline mr-3">
         <span>Continue with Facebook</span>
       </base-button>
@@ -82,6 +82,18 @@ async function authenticateWithGoogle() {
     toast.error(message);
   }
 }
+
+
+async function authenticateWithFacebook() {
+  try {
+    await store.dispatch('auth/authenticateWithFacebook');
+    router.push("/");
+  } catch(error) {
+    const { message } = error as Error;
+    toast.error(message);
+  }
+}
+
 
 </script>
 <style lang="scss" scoped>

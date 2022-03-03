@@ -7,6 +7,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
+  FacebookAuthProvider,
   signOut,
 } from "firebase/auth";
 import { UserCredentials } from "./types";
@@ -54,8 +55,23 @@ export const actions: ActionTree<AuthenticationState, RootState> = {
   
     try {
       const result = await signInWithPopup(auth, provider);
-      const credentials = GoogleAuthProvider.credentialFromResult(result);
-      const token = credentials?.accessToken;
+      // const credentials = GoogleAuthProvider.credentialFromResult(result);
+      // const token = credentials?.accessToken;
+      const user = result.user;
+      commit('user/setUser', user, { root: true });
+    } catch(error) {
+      console.error(error);
+      const message = getAuthErrorMessage(error as FirebaseError);
+      throw new Error(message);
+    }
+  },
+
+  async authenticateWithFacebook({ commit }) {
+    const auth = getAuth();
+    const provider = new FacebookAuthProvider();
+
+    try {
+      const result = await signInWithPopup(auth, provider);
       const user = result.user;
       commit('user/setUser', user, { root: true });
     } catch(error) {
