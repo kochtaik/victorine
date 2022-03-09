@@ -16,6 +16,7 @@ import Toast, { PluginOptions } from "vue-toastification";
 import "vue-toastification/dist/index.css";
 const toastOptions: PluginOptions = {
   closeButtonClassName: "close-crossmark",
+  timeout: false,
 };
 
 store.dispatch('initializeFirebase').then(() => {

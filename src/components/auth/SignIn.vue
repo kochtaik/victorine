@@ -4,7 +4,7 @@
     <div class="my-4">
       New to Victorine? <router-link class="text-info" to="/auth/signup">Sign up</router-link> then!
     </div>
-    <form @submit.prevent="signInWithEmail">
+    <form @submit.prevent="signInWithEmail" data-test="signInForm">
       <label class="input-group" for="email">
         <span class="mb-1">Email</span>
         <BaseInput
@@ -13,6 +13,7 @@
           type="email"
           placeholder="Enter email"
           class="w-full truncate"
+          data-test="signInEmail"
         />
       </label>
       <label class="input-group my-4" for="password">
@@ -23,6 +24,7 @@
           type="password"
           placeholder="Enter password"
           class="w-full truncate"
+          data-test="signInPass"
         />
         <a href="#" class="text-sm mt-1 text-info">Forgot password?</a>
       </label>
@@ -72,6 +74,10 @@ async function signInWithEmail() {
     toast.error(message);
   }
 }
+
+defineExpose({
+  signInWithEmail,
+})
 
 async function authenticateWithGoogle() {
   try {

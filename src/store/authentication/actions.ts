@@ -55,8 +55,6 @@ export const actions: ActionTree<AuthenticationState, RootState> = {
   
     try {
       const result = await signInWithPopup(auth, provider);
-      // const credentials = GoogleAuthProvider.credentialFromResult(result);
-      // const token = credentials?.accessToken;
       const user = result.user;
       commit('user/setUser', user, { root: true });
     } catch(error) {

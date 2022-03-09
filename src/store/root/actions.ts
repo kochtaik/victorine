@@ -1,5 +1,5 @@
 import { activateFirebase } from "@/firebase/initFirebase";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { connectAuthEmulator, getAuth, onAuthStateChanged } from "firebase/auth";
 import { ActionTree } from "vuex";
 import { RootState } from "./state";
 
@@ -12,6 +12,7 @@ export const actions: ActionTree<RootState, RootState> = {
     return new Promise((resolve, reject) => {
       activateFirebase();
       const auth = getAuth();
+      // connectAuthEmulator(auth, "http://localhost:9099");
       onAuthStateChanged(auth, (user) => {
         commit('user/setUser', user, { root: true });
         resolve();
