@@ -75,10 +75,6 @@ async function signInWithEmail() {
   }
 }
 
-defineExpose({
-  signInWithEmail,
-})
-
 async function authenticateWithGoogle() {
   try {
     await store.dispatch('auth/authenticateWithGoogle');

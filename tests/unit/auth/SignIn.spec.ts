@@ -1,9 +1,12 @@
-import { mockUser, authParams } from "./__mocks__/store";
 import SignIn from "@/components/auth/SignIn.vue";
 import { mount } from "@vue/test-utils";
 import { key } from "@/store";
-import { ActionTree, createStore, Module, Store } from "vuex";
 import * as toast from "@/plugins/customToasts";
+
+const authParams = {
+  email: "admin123@test.com",
+  password: 'admin123',
+};
 
 jest.mock('vue-router', () => ({
   useRouter: jest.fn(() => ({
@@ -11,47 +14,18 @@ jest.mock('vue-router', () => ({
   }))
 }));
 
-
-let userModule: Module<any, unknown> = {
-  namespaced: true,
-  state: {
-    currentUser: null,
-  },
-  mutations: {
-    setUser(state, payload) {
-      state.currentUser = payload;
-    }
-  },
-  getters: {
-    isLoggedIn(state) {
-      return state.currentUser !== null;
-    },
-    currentUser(state) {
-      return state.currentUser;
-    }
-  }
+let wrapper: ReturnType<typeof mount>;
+let store: {
+  commit: jest.Mock<any, any>;
+  dispatch: jest.Mock<any, any>;
 };
-
-let authActions: ActionTree<any, unknown> = {
-  signInWithEmail({ commit }) {
-    commit('user/setUser', mockUser, { root: true });
-  }
-};
-
-
-let store = createStore({
-  modules: {
-    auth: {
-      namespaced: true,
-      actions: authActions,
-    },
-    user: userModule,
-  }
-});
-
-let wrapper: ReturnType<typeof mount>
 
 beforeEach(() => {
+  store = {
+    commit: jest.fn(),
+    dispatch: jest.fn(),
+  };
+
   wrapper = mount(SignIn, {
     global: {
       provide: {
@@ -63,7 +37,7 @@ beforeEach(() => {
 });
 
 
-test('sets a user to Vuex after a successful authentication', async () => {
+it('sets a user to Vuex after a successful authentication', async () => {
   const emailField = wrapper.findComponent('#email');
   const passwordField = wrapper.findComponent('#password');
   const form = wrapper.get('[data-test="signInForm"]');
@@ -72,37 +46,16 @@ test('sets a user to Vuex after a successful authentication', async () => {
   await passwordField.setValue(authParams.password);
   await form.trigger('submit');
 
-  expect(store.getters['user/isLoggedIn']).toBe(true);
-  expect(store.getters['user/currentUser']).toStrictEqual(mockUser);
+  expect(store.dispatch).toHaveBeenCalled();
 });
 
-test('shows a toast when error occurs', async () => {
-  
-  //@ts-ignore
-  toast.error = jest.fn();
-  
-  store = createStore({
-    modules: {
-      auth: {
-        namespaced: true,
-        actions: {
-          signInWithEmail({ commit }) {
-            throw new Error();
-          }
-        }
-      },
-      user: userModule,
-    }
+it('shows a toast when error occurs', async () => {
+  store.dispatch = jest.fn(() => {
+    throw new Error;
   });
 
-  const wrapper = mount(SignIn, {
-    global: {
-      provide: {
-        [key as symbol]: store,
-      },
-      stubs: ['router-link', 'BaseInput'],
-    },
-  });
+  //@ts-ignore
+  toast.error = jest.fn();
 
   const emailField = wrapper.findComponent('#email');
   const passwordField = wrapper.findComponent('#password');
