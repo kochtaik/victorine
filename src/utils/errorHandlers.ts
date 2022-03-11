@@ -5,7 +5,7 @@ import { FirebaseError } from "firebase/app";
  * Authentication API errors of Firebase.
  * See https://stackoverflow.com/questions/39152004/list-of-all-auth-errors-for-firebase-web-api
  */
-enum authErrorMessages {
+export enum authErrorMessages {
   'auth/wrong-password' = "You entered a wrong password",
   'auth/user-not-found' = "The user does not exist. Check the email address you entered.",
   'auth/email-already-in-use' = "The provided email is already in use by an existing user. Each user must have a unique email.",
