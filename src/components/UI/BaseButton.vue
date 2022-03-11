@@ -1,7 +1,7 @@
 <template>
   <button
     :class="[sizeClasses, variantClasses]"
-    class="inline-flex justify-between items-center rounded-sm transition-colors"
+    class=" rounded-sm transition-colors"
     :disabled="disabled"
     >
     <slot></slot>
@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, reactive, ref, PropType } from "@vue/runtime-core"
+import { computed, PropType } from "@vue/runtime-core"
   type ButtonVariants = "base" | "outlined" | "text";
   type ButtonSizes = "sm" | "md" | "lg";
 

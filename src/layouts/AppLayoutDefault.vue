@@ -2,7 +2,9 @@
 <template>
   <div>
     <BaseHeader />
-    <slot />
+    <main class="h-screen">
+      <slot />
+    </main>
     <BaseFooter/>
   </div>
 </template>

@@ -4,7 +4,7 @@ import { AuthenticationState } from "./state";
 
 
 export const getters: GetterTree<AuthenticationState, RootState> = {
-  isLoggedInGetter(state) {
-    return state.isLoggedIn;
+  isLoggedIn(state, getters, rootState) {
+    return rootState.user.currentUser !== null;
   }
 } 
