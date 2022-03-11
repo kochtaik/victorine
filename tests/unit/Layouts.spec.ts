@@ -37,7 +37,7 @@ test('has components inside', () => {
 
   const wrapper = mount(App, {
     global: {
-      stubs: ['router-link', 'router-view'],
+      stubs: ['router-link', 'router-view', 'base-button'],
       provide: {
         [key as symbol]: store,
       }
