@@ -23,6 +23,7 @@ let store: {
 };
 let form: ReturnType<typeof wrapper.get>;
 let googleBtn: ReturnType<typeof wrapper.get>;
+let facebookBtn: ReturnType<typeof wrapper.get>;
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -47,6 +48,7 @@ beforeEach(() => {
 
   form = wrapper.get('[data-test="signInForm"]');
   googleBtn = wrapper.get('[data-test="google-btn"');
+  facebookBtn = wrapper.get('[data-test="facebook-btn"');
 });
 
 describe('signInWithEmail', () => {
@@ -101,3 +103,23 @@ describe('authenticateWithGoogle', () => {
     expect(toast.error).toHaveBeenCalled();
   });
 });
+
+describe('authenticateWithFacebook', () => {
+  it('calls "auth/authenticateWithFacebook" after successful authentication', async () => {
+    await facebookBtn.trigger('click');
+
+    expect(store.dispatch).toHaveBeenCalledWith('auth/authenticateWithFacebook');
+    expect(store.dispatch).toHaveBeenCalledTimes(1);
+  });
+
+  it('shows an error toast if error occurs', async () => {
+    store.dispatch = jest.fn(() => {
+      throw new Error();
+    });
+    (toast.error as jest.Mock) = jest.fn();
+
+    await facebookBtn.trigger('click');
+    expect(toast.error).toHaveBeenCalled();
+  });
+});
+

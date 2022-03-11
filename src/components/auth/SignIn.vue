@@ -38,11 +38,21 @@
       </div>
     </div>
     <div class="flex flex-col">
-      <base-button @click="authenticateWithGoogle" variant="outlined" class="rounded-full mb-4 text-center" data-test="google-btn">
+      <base-button
+        @click="authenticateWithGoogle"
+        variant="outlined"
+        class="rounded-full mb-4 text-center"
+        data-test="google-btn"
+      >
         <img src="@/assets/icons/google_logo.svg" alt="Google logo" class="w-6 h-6 inline mr-3">
         <span>Continue with Google</span>
       </base-button>
-      <base-button @click="authenticateWithFacebook" variant="outlined" class="rounded-full mb-4 text-center">
+      <base-button
+        @click="authenticateWithFacebook"
+        variant="outlined"
+        class="rounded-full mb-4 text-center"
+        data-test="facebook-btn"
+      >
         <img src="@/assets/icons/fb_logo.svg" alt="Facebook logo" class="w-6 h-6 inline mr-3">
         <span>Continue with Facebook</span>
       </base-button>
