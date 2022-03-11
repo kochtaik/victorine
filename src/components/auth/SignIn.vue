@@ -38,7 +38,7 @@
       </div>
     </div>
     <div class="flex flex-col">
-      <base-button @click="authenticateWithGoogle" variant="outlined" class="rounded-full mb-4 text-center">
+      <base-button @click="authenticateWithGoogle" variant="outlined" class="rounded-full mb-4 text-center" data-test="google-btn">
         <img src="@/assets/icons/google_logo.svg" alt="Google logo" class="w-6 h-6 inline mr-3">
         <span>Continue with Google</span>
       </base-button>

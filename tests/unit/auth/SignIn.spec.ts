@@ -22,11 +22,12 @@ let store: {
   dispatch: jest.Mock<any, any>;
 };
 let form: ReturnType<typeof wrapper.get>;
+let googleBtn: ReturnType<typeof wrapper.get>;
 
-beforeEach(async () => {
+beforeEach(() => {
   jest.clearAllMocks();
-  //@ts-ignore
-  useRouter.mockImplementationOnce(() => ({
+
+  (useRouter as jest.Mock).mockImplementationOnce(() => ({
     push
   }));
 
@@ -44,34 +45,59 @@ beforeEach(async () => {
     },
   });
 
-  const emailField = wrapper.findComponent('#email');
-  const passwordField = wrapper.findComponent('#password');
   form = wrapper.get('[data-test="signInForm"]');
-
-  await emailField.setValue(authParams.email);
-  await passwordField.setValue(authParams.password);
+  googleBtn = wrapper.get('[data-test="google-btn"');
 });
 
-it('sets a user to Vuex after a successful authentication', async () => {
-  await form.trigger('submit');
+describe('signInWithEmail', () => {
+  beforeEach(async () => {
+    const emailField = wrapper.findComponent('#email');
+    const passwordField = wrapper.findComponent('#password');
 
-  expect(store.dispatch).toHaveBeenCalled();
-});
-
-it('shows a toast when error occurs', async () => {
-  store.dispatch = jest.fn(() => {
-    throw new Error;
+    await emailField.setValue(authParams.email);
+    await passwordField.setValue(authParams.password);
   });
-  //@ts-ignore
-  toast.error = jest.fn();
 
-  await form.trigger('submit');
-  expect(toast.error).toBeCalled();
+  it('sets a user to Vuex after a successful authentication', async () => {
+    await form.trigger('submit');
+
+    expect(store.dispatch).toHaveBeenCalled();
+  });
+
+  it('shows a toast when error occurs', async () => {
+    store.dispatch = jest.fn(() => {
+      throw new Error;
+    });
+
+    (toast.error as jest.Mock) = jest.fn();
+
+    await form.trigger('submit');
+    expect(toast.error).toBeCalled();
+  });
+
+  it('redirects user to the home page after successful authentication', async () => {
+    await form.trigger('submit');
+
+    expect(push).toHaveBeenCalledTimes(1);
+    expect(push).toHaveBeenCalledWith('/');
+  });
 });
 
-it('redirects user to the home page after successful authentication', async () => {
-  await form.trigger('submit');
+describe('authenticateWithGoogle', () => {
+  it('calls "auth/authenticateWithGoogle" after successful authentication', async () => {
+    await googleBtn.trigger('click');
 
-  expect(push).toHaveBeenCalledTimes(1);
-  expect(push).toHaveBeenCalledWith('/');
+    expect(store.dispatch).toHaveBeenCalledWith('auth/authenticateWithGoogle');
+    expect(store.dispatch).toHaveBeenCalledTimes(1);
+  });
+
+  it('shows an error toast if error occurs', async () => {
+    store.dispatch = jest.fn(() => {
+      throw new Error();
+    });
+    (toast.error as jest.Mock) = jest.fn();
+
+    await googleBtn.trigger('click');
+    expect(toast.error).toHaveBeenCalled();
+  });
 });
